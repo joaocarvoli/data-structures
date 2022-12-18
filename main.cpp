@@ -10,24 +10,25 @@ int main(){
 }
 
 void testSimpleLinkedList(){
-  LinkedList* list01 = new LinkedList();
-  list01->add(2);
-  list01->add(2);
-  list01->add(4);
-  list01->print();
-  list01->search(2);
-  list01->search(5);
-  list01->removeOnceOccurrence(2);
-  list01->add(5);
-  list01->add(7);
-  list01->print();
-  list01->removeOnceOccurrence(5);
-  list01->print();
-  list01->add(7);
-  list01->print();
-  list01->removeOnceOccurrence(7);
-  list01->print();
-  list01->removeOnceOccurrence(4);
-  list01->print();
-  printf("The size of Linked List is: %d\n", list01->size());
+  LinkedList list01 = LinkedList();
+  list01.add(2);
+  list01.add(2);
+  list01.add(4);
+  cout << list01 << endl; // 2 2 4
+  list01.search(2);
+  list01.search(5);
+  list01.removeOnceOccurrence(2); 
+  list01.add(5);
+  list01.add(7);
+  cout << list01 << endl; // 2 4 5 7
+  list01.removeOnceOccurrence(5);
+  cout << list01 << endl; // 2 4 7
+  list01.add(7);
+  cout << list01 << endl; // 2 4 7 7
+  list01.removeOnceOccurrence(7);
+  cout << list01 << endl; // 2 4 7
+  list01.removeOnceOccurrence(7);
+  cout << list01 << endl;  // 2 4
+
+  printf("The size of Linked List is: %d\n", list01.size());
 }
