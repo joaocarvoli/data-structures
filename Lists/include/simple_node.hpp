@@ -8,7 +8,5 @@ struct Node {
   double data;
   Node *next = nullptr;
 
-  Node(int data){
-    this->data = data;
-  }
+  Node(int data) {this->data = data;}
 };

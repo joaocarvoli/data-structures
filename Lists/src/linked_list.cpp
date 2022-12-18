@@ -2,15 +2,20 @@
 
 #include "../include/linked_list.hpp"
 
+#include <utility>
+
 using namespace std;
 
 LinkedList::LinkedList(){
   head = nullptr;
 }
 
-/*LinkedList::~LinkedList(){
-  clear();
-}*/
+LinkedList::~LinkedList(){
+  while (this->head != nullptr) {
+    delete exchange(head, head->next);
+  }
+}
+
 
 void LinkedList::add(int item){
   if(head == nullptr) head = new Node(item);
@@ -27,12 +32,11 @@ void LinkedList::add(int item){
 }
 
 
-int LinkedList::removeOnceOccurrence(int num){
+void LinkedList::removeOnceOccurrence(int num){
   if(head->data == num){
-    head = head->next;
+    delete exchange(head, head->next);
     printf("%d removed sucessfully!\n", num);
     _size -= 1;
-    return 0;
   }
   else {
     Node* ancestor = head;
@@ -41,21 +45,27 @@ int LinkedList::removeOnceOccurrence(int num){
     while(temp->next != nullptr){
       if(temp->data == num){
         ancestor->next = temp->next;
-        temp->next = nullptr;
+        delete temp;
         printf("%d removed sucessfully!\n", num);
         _size -= 1;
-        return 0;
+        break;
       }
       ancestor = temp;
       temp = temp->next;
     }
+
+    if(temp->data == num){
+      ancestor->next = temp->next;
+      delete temp;
+      printf("%d removed sucessfully!\n", num);
+      _size -= 1;
+    }
   }
-  return 1;
 }
 
-void LinkedList::removeAllOccurrences(int num){
+/*void LinkedList::removeAllOccurrences(int num){
   if(head->data == num){
-    head = head->next;
+    delete exchange(head, head->next);
     _size -= 1;
   }
   else {
@@ -65,15 +75,20 @@ void LinkedList::removeAllOccurrences(int num){
     while(temp->next != nullptr){
       if(temp->data == num){
         ancestor->next = temp->next;
-        temp->next = nullptr;
+        delete temp;
         _size -= 1;
       }
       ancestor = temp;
       temp = temp->next;
     }
-  }
-}
 
+    if(temp->data == num){
+      ancestor->next = temp->next;
+      delete temp;
+      _size -= 1;
+    }
+  }
+}*/
 
 void LinkedList::search(int num){
   Node* temp = head;
@@ -86,20 +101,21 @@ void LinkedList::search(int num){
   else  printf("%d is in the list and it appears %d times\n", num, occurrences);
 }
 
-void LinkedList::print(){
-  Node* temp = head;
-  if(_size == 0) printf("The list has any element!\n");
-  else {
-    cout << "Elements: ";
-    while(temp != nullptr){
-      cout << temp->data << " ";
-      temp = temp->next;
-    }
-    cout << endl;
-  }
-  
-}
-
 int LinkedList::size(){
   return _size;
+}
+
+ostream &operator<<(ostream &os, LinkedList &list) {
+  Node* temp = list.head;
+  cout << endl;
+  if(list._size == 0) printf("The list has any element!\n");
+  else {
+    os << "Elements: ";
+    while(temp != nullptr){
+      os << temp->data << " ";
+      temp = temp->next;
+    }
+    os << endl;
+  }
+  return os;
 }
